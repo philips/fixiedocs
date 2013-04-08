@@ -22,7 +22,7 @@ env:
         # travis encrypt GH_OAUTH_TOKEN=XXXXXXXXXXXXXXX
         #
         # User specific env variables
-        - secure: "eurujlXnmnCCSsord8UqeDVYlbz7syUZpm8McKY2ntOsKvfTUsxhpNDlZe2o\ntecGPbxuEYQQ0oiILXiKT+RiK7bRKiMZMv6R1tK06fugm0+lFUpnzERcBZPb\npYfxAL8xGPsWes3xEz0gPnCTwhKIA1/wPX7eE4xcEj/nKjVgEeI="
+        - secure: "mGLnAO3nQrtYl2JKUtbzYo5PckL5sGP1rxISO2h9KBtdaV6f79Jde3h9xs81\njraz8s0Kr35Azot+Bja58qLHWPjxaLoPHrquKkDXYPq6K8XwwFBt4mQITlgb\n8Xn2vh71RJHray5eZgKw/qpFl0eaRUxlkMfoOjjsbG2k94OsNQ8="
         - GH_OWNER: philips
         - GH_PROJECT_NAME: fixiedocs
         # This .travis.yml file instructs travis-ci.org to build your master branch using `yeoman build`
