@@ -1,7 +1,9 @@
 {
   "name": "fixiedocs",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-markdown": "~0.2.0"
+  },
   "devDependencies": {
     "grunt": "~0.4.0",
     "grunt-contrib-copy": "~0.4.0",

@@ -14,6 +14,7 @@ var mountFolder = function (connect, dir) {
 module.exports = function (grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    grunt.loadNpmTasks('grunt-markdown');
 
     // configurable paths
     var yeomanConfig = {
@@ -24,6 +25,13 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
+            markdown: {
+              files: [
+                  '<%= yeoman.app %>/{,*/}*.{md,markdown}',
+                  '<%= yeoman.app %>/template.jst'
+              ],
+              tasks: ['markdown']
+            },
             coffee: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
                 tasks: ['coffee:dist']
@@ -38,7 +46,7 @@ module.exports = function (grunt) {
             },
             livereload: {
                 files: [
-                    '<%= yeoman.app %>/*.html',
+                    '{.tmp,<%= yeoman.app %>}/*.html',
                     '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,webp}'
@@ -236,6 +244,21 @@ module.exports = function (grunt) {
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
+        },
+        markdown: {
+          all: {
+            files: ['<%= yeoman.app %>/{,*/}*.{md,markdown}'],
+            dest: '.tmp',
+            template: '<%= yeoman.app %>/template.jst',
+            options: {
+              gfm: true,
+              highlight: 'manual',
+              codeLines: {
+                before: '<span>',
+                after: '</span>'
+              }
+            }
+          }
         }
     });
 
@@ -249,6 +272,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'coffee:dist',
+            'markdown',
             'compass:server',
             'livereload-start',
             'connect:livereload',
@@ -276,6 +300,7 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy',
+        'markdown',
         'usemin'
     ]);
 
