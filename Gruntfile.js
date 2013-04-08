@@ -102,12 +102,13 @@ module.exports = function (grunt) {
         },
         jshint: {
             options: {
-                jshintrc: '.jshintrc'
+                jshintrc: '.jshintrc',
             },
             all: [
-                'Gruntfile.js',
                 '<%= yeoman.app %>/scripts/{,*/}*.js',
                 '!<%= yeoman.app %>/scripts/vendor/*',
+                '!<%= yeoman.app %>/scripts/main.js',
+                '!Gruntfile.js',
                 'test/spec/{,*/}*.js'
             ]
         },
@@ -157,12 +158,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        // not used since Uglify task does concat,
-        // but still available if needed
-        /*concat: {
-            dist: {}
-        },*/
-        
         uglify: {
             dist: {
                 files: {
@@ -172,8 +167,9 @@ module.exports = function (grunt) {
                 }
             }
         },
+        // TODO: Remove TODO:build.js from template.jst to make this work
         useminPrepare: {
-            html: '<%= yeoman.app %>/index.html',
+            html: '<%= yeoman.app %>/template.jst',
             options: {
                 dest: '<%= yeoman.dist %>'
             }
@@ -233,7 +229,10 @@ module.exports = function (grunt) {
                     dot: true,
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
+                    // TODO: Use usemin instead of copying
                     src: [
+                        'components/**/*',
+                        'scripts/**/*',
                         '*.{ico,txt}',
                         '.htaccess'
                     ]
@@ -249,6 +248,19 @@ module.exports = function (grunt) {
           all: {
             files: ['<%= yeoman.app %>/{,*/}*.{md,markdown}'],
             dest: '.tmp',
+            template: '<%= yeoman.app %>/template.jst',
+            options: {
+              gfm: true,
+              highlight: 'manual',
+              codeLines: {
+                before: '<span>',
+                after: '</span>'
+              }
+            }
+          },
+          dist: {
+            files: ['<%= yeoman.app %>/{,*/}*.{md,markdown}'],
+            dest: 'dist',
             template: '<%= yeoman.app %>/template.jst',
             options: {
               gfm: true,
@@ -292,19 +304,18 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'coffee',
+        'markdown:dist',
         'compass:dist',
         'useminPrepare',
         'imagemin',
         'htmlmin',
-        'concat',
         'cssmin',
-        'uglify',
         'copy',
-        'markdown',
         'usemin'
     ]);
 
     grunt.registerTask('default', [
+        'jshint',
         'test',
         'build'
     ]);
