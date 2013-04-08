@@ -5,7 +5,7 @@
 
    Version: 0.8
 
-   Based on code and concept by Janko Jovanovic 
+   Based on code and concept by Janko Jovanovic
    in his article:
    http://www.jankoatwarpspeed.com/post/2009/08/20/Table-of-contents-using-jQuery.aspx
 
@@ -36,9 +36,9 @@
 */
 
 
-(function($){
+(function ($) {
 
-  $.TableOfContents = function(el, scope, options){
+  $.TableOfContents = function (el, scope, options) {
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this;
@@ -47,30 +47,30 @@
     self.$el = $(el);
     self.el = el; 
 
-    self.toc = "";                               // We use this to build our TOC;
+    self.toc = '';                               // We use this to build our TOC;
     self.listStyle = null;                       // This will store the type of list
-    self.tags = ["h1","h2","h3","h4","h5","h6"]; // The six header tags
+    self.tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']; // The six header tags
 
 
-    self.init = function(){
+    self.init = function () {
       // Merge the defaultOptions with any options passed in
       self.options = $.extend({},$.TableOfContents.defaultOptions, options);
 
       // Gets the scope. Defaults to the entire document if not specified
-      if(typeof(scope) == "undefined" || scope == null) scope = document.body;
+      if (typeof(scope) == "undefined" || scope == null) scope = document.body;
       self.$scope = $(scope);
 
       // Find the first heading withing the scope
       var $first = self.$scope.find(self.tags.join(', ')).filter(':first');
 
       // If no headings were found, stop building the TOC
-      if($first.length != 1) return;
+      if ($first.length != 1) return;
 
       // Set the starting depth
       self.starting_depth = self.options.startLevel;
 
       // Quick validation on depth
-      if(self.options.depth < 1) self.options.depth = 1;
+      if (self.options.depth < 1) self.options.depth = 1;
 
       // Get only the tags starting with startLevel, and counting the depth
       var filtered_tags = self.tags.splice(self.options.startLevel - 1, self.options.depth);
@@ -80,9 +80,9 @@
 
 
       // If topLinks is enabled, set/get an id for the body element
-      if(self.options.topLinks !== false){
+      if (self.options.topLinks !== false) {
         var id = $(document.body).attr('id');
-        if(id == "") {
+        if (id == "") {
           id = self.options.topBodyId;
           document.body.id = id;
         };
@@ -93,16 +93,16 @@
 
 
       // Find out which list style to use
-      if(self.$el.is('ul')){
+      if (self.$el.is('ul')) {
         self.listStyle = 'ul';
-      } else if (self.$el.is('ol')){
+      } else if (self.$el.is('ol')) {
         self.listStyle = 'ol';
       };
 
 
       self.buildTOC();
 
-      if(self.options.proportionateSpacing === true && !self.tieredList()){
+      if (self.options.proportionateSpacing === true && !self.tieredList()) {
         self.addSpacing();
       };
 
@@ -110,22 +110,22 @@
     };
 
     // Helper function that returns true for both OL and UL lists
-    self.tieredList = function(){
+    self.tieredList = function () {
       if (self.options.tieredList === false) {
         return false;
       }
       return (self.listStyle == 'ul' || self.listStyle == 'ol');
     };
 
-    self.buildTOC = function(){
+    self.buildTOC = function () {
       self.current_depth = self.starting_depth;
 
-      self.$headings.each(function(i,element){
+      self.$headings.each(function (i,element) {
         // Get current depth base on h1, h2, h3, etc.
         var depth = this.nodeName.toLowerCase().substr(1,1);
 
         // This changes depth, or adds separators, only if not the first item
-        if(i > 0 || ( i == 0 && depth != self.current_depth)){
+        if (i > 0 || ( i == 0 && depth != self.current_depth)) {
 
           self.changeDepth(depth)
         };
@@ -134,7 +134,7 @@
         self.toc += self.formatLink(this, depth, i) + "\n";
 
         // Add the topLink if enabled
-        if(self.options.topLinks !== false) self.addTopLink(this);
+        if (self.options.topLinks !== false) self.addTopLink(this);
       });
 
       // Close up any nested list
@@ -147,7 +147,7 @@
       self.$el.html(self.toc);
     };
 
-    self.addTopLink = function(element){
+    self.addTopLink = function (element) {
       // Get the text for the link (if topLinks === true, it defaults to "Top")
       var text = (self.options.topLinks === true ? "Top" : self.options.topLinks );
       var $a = $("<a href='#" + self.topLinkId + "' class='" + self.options.topLinkClass + "'></a>").html(text);
@@ -156,18 +156,18 @@
       $(element).append($a);
     };
 
-    self.formatLink = function(element, depth, index) {
+    self.formatLink = function (element, depth, index) {
       // Get the current id of the header element
       var id = element.id,
           text = $(element).text();
 
       // If no id exisits, create a unique one
-      if(id == ""){
+      if (id == "") {
         id = self.buildSlug($(element).text());
         element.id = id;
       };
 
-      if(self.options.linkifyHeaders) {
+      if (self.options.linkifyHeaders) {
         $(element).empty();
         $(element).append("<a href='#" + id + "'>" + text + "</a>");
       }
@@ -176,24 +176,24 @@
       var a = "<a href='#" + id + "'";
 
       // If this isn't a tiered list, we need to add the depth class
-      if(!self.tieredList()) a += " class='" + self.depthClass(depth) + "'";
+      if (!self.tieredList()) a += " class='" + self.depthClass(depth) + "'";
 
       // Finish building the link
       a += ">" + self.options.levelText.replace('%', $(element).text()) + '</a>';
       return a;
     };
 
-    self.changeDepth = function(new_depth, last){
-      if(last !== true) last = false;
+    self.changeDepth = function (new_depth, last) {
+      if (last !== true) last = false;
 
       // If nested
-      if(new_depth > self.current_depth){
+      if (new_depth > self.current_depth) {
         // Add enough opening tags to step into the heading
         // as it is possible that a poorly built document
         // steps from h1 to h3 without an h2
         var opening_tags = [];
-        if(self.tieredList()) {
-          for(var i = self.current_depth; i < new_depth; i++){
+        if (self.tieredList()) {
+          for(var i = self.current_depth; i < new_depth; i++) {
             opening_tags.push('<' + self.listStyle + '>' + "\n");
           };
         }
@@ -202,11 +202,11 @@
         // Add the code to our TOC and an opening LI
         self.toc += opening_tags.join(li) + li;
 
-      } else if (new_depth < self.current_depth){
+      } else if (new_depth < self.current_depth) {
         // Close all the loops
         var closing_tags = [];
-        if(self.tieredList()) {
-          for(var i = self.current_depth; i > new_depth; i--){
+        if (self.tieredList()) {
+          for(var i = self.current_depth; i > new_depth; i--) {
             closing_tags.push('</' + self.listStyle + '>' + "\n");
           };
         }
@@ -230,21 +230,21 @@
       self.current_depth = new_depth;
     };
 
-    self.buildSlug = function(text){
+    self.buildSlug = function (text) {
       text = text.toLowerCase().replace(/[^a-z0-9 -]/gi,'').replace(/ /gi,'-');
       text = text.substr(0,50);
       return text;
     };
 
-    self.depthClass = function(depth){
+    self.depthClass = function (depth) {
       // Normalizes the depths to always start at 1, even if the starting tier is a h4
       return self.options.levelClass.replace('%', (depth - ( self.starting_depth - 1 ) ) );
     };
 
-    self.addSpacing = function(){
+    self.addSpacing = function () {
       var start = self.$headings.filter(':first').position().top;
 
-      self.$headings.each(function(i,el){
+      self.$headings.each(function (i,el) {
         var $a = self.$el.find('a:eq(' + i + ')');
                                var pos = (
                                           ( $(this).position().top - start ) / 
@@ -316,8 +316,8 @@
         };
 
 
-        $.fn.tableOfContents = function(scope, options){
-          return this.each(function(){
+        $.fn.tableOfContents = function (scope, options) {
+          return this.each(function () {
             var toc = new $.TableOfContents(this, scope, options);
             delete toc; // Free memory
             $('[data-spy="scroll"]').each(function () {
@@ -328,7 +328,7 @@
 })(jQuery);
 
 
-$(document).ready(function(){
+$(document).ready(function () {
   $("ul#toc").tableOfContents(null, {
     startLevel: 2,
     tieredList: false
