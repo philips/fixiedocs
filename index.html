@@ -1,0 +1,136 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- TODO:build:js scripts/vendor/modernizr.js -->
+        <script src="components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+        <title>Fixie Docs</title>
+    </head>
+    <body data-spy="scroll" data-target="#toc">
+        <div class="container">
+          <div class="row">
+            <div class="span3" id="toc-container">
+              <ul class="nav nav-list" id="toc"  data-spy="affix" data-offset-top="1">
+              </ul>
+            </div>
+            <div class="span9">
+              <h1>Fixie Docs</h1>
+<blockquote>
+<p>Transform your markdown documentation into a single navigable html
+document.</p>
+</blockquote>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/YsZijEx2Iyo?hd=1" frameborder="0" allowfullscreen></iframe>
+
+<p>This tool takes a single markdown input file, named README.md by
+convention, and turns it into a single html page. The target audience
+are people writing reference documentation for products, APIs or
+libraries. It was written as a reaction to complex tools and inspired by
+single page docs like <a href="http://expressjs.com/api.html">express</a>.</p>
+<p>Notable features:</p>
+<ul>
+<li>Single input file</li>
+<li>Auto-refresh on edits</li>
+<li>Generated navigation</li>
+<li>Simple build system</li>
+<li>Open source (MIT)</li>
+</ul>
+<p>Give it a shot and let me know what you think.</p>
+<h2>Usage</h2>
+<p>Get started by downloading the code and dependencies. This step you
+will only need to run once.</p>
+<pre><code><span><span class="title">git</span> clone https://github.com/philips/fixiedocs.git</span>
+<span><span class="title">cd</span> fixiedocs</span>
+<span><span class="title">npm</span> install</span></code></pre>
+<p>Now the fun part: getting a preview of the document. In the same
+terminal run the following command to launch a server and open your
+browser.</p>
+<pre><code><span><span class="title">grunt</span> server</span></code></pre>
+<p>This browser preview will continue to update everytime you save a change
+to the README.md file. Lets try that out. Open the README.md file in
+your favorite editor and start editing. If you aren&#39;t familiar with
+markdown you can find a <a href="http://daringfireball.net/projects/markdown/">full guide here</a>. But, you should be
+able to infer the basics from reading the Fixie Docs README.md file.</p>
+<h2>Publishing</h2>
+<p>In most every case documentation is meant to be uploaded for anyone to
+read on the public internet. So, lets setup a nice automated process for
+generating your website on a public URL.</p>
+<p>Let&#39;s use GitHub&#39;s free static HTML hosting called <a href="http://pages.github.com/">Pages</a>. We
+will generate the Pages when we commit a change to this git repo using
+Travis CI. It will be nice and automated.</p>
+<pre><code><span><span class="title">yo</span> travis-ci:gh-pages</span></code></pre>
+<p>By default you should have a beautiful set of docs. However, you can
+customize the CSS, JavaScript and HTML too. All of it can be found in
+the <code>app/</code> directory.</p>
+<p>For example the HTML template will need to be customized if you wish to
+add a title or analytics. The template file is called
+<code>app/template.jst</code>.</p>
+<p>To generate an uploadable static version of the docs locally run the <code>grunt</code>
+command in your terminal.  This will output all of the necessary HTML, CSS and
+JavaScript to the <code>dist/</code> directory.</p>
+<p>There are a ton of other great options for publishing the static
+documentation that is generated from Fixie Docs. Here are a few
+suggestions:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/8312162/static-hosting-on-amazon-s3-dns-configuration">Amazon S3</a></li>
+<li><a href="https://developers.google.com/storage/docs/gsutil/commands/setwebcfg">Google Storage</a></li>
+<li><a href="http://www.rackspace.com/blog/rackspace-cloud-files-how-to-create-a-static-website/">Rackspace Cloud Files</a></li>
+</ul>
+<h2>Future Directions</h2>
+<p>There are a lot of features I would love to see. Here are some of them.</p>
+<ul>
+<li>Extract code snippets into individual files for testing</li>
+<li>Integrate the frontend code into jekyll</li>
+<li>Improved responsive layouts</li>
+<li>Better packaging</li>
+<li>Use lunr to integrate filtering and searching: <a href="https://npmjs.org/package/lunr">https://npmjs.org/package/lunr</a></li>
+<li>Heirarchy in the sidebar like express js</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+
+        <!-- TODO:build:js scripts/main.js -->
+        <script src="components/jquery/jquery.js"></script>
+        <script src="scripts/main.js"></script>
+        <!-- endbuild -->
+
+        <!-- TODO:build:js scripts/plugins.js -->
+        <script src="components/sass-bootstrap/js/bootstrap-affix.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-alert.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-dropdown.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-tooltip.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-modal.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-transition.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-button.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-popover.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-typeahead.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-carousel.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-scrollspy.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-collapse.js"></script>
+        <script src="components/sass-bootstrap/js/bootstrap-tab.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
